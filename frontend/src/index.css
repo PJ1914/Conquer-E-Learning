@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Educational Website Color Palette */
+    --gulf-blue: #070653;
+    --polar: #f2fbfc;
+    --wedgewood: #4a919c;
+    --kimberly: #7b7ca2;
+    --violet: #0b0b41;
+    --fiord: #43436d;
+    --lavender-gray: #bdbedc;
+    --shadow-green: #95bbc0;
+  }
+
+  body {
+    @apply bg-secondary-100 text-dark-600 font-sans;
+  }
+
+  /* Improved typography for educational content */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-dark-600;
+  }
+}
+
+@layer components {
+  /* Primary CTA Buttons - Deep Educational Blue */
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 text-center inline-block shadow-md hover:shadow-lg;
+  }
+  
+  /* Secondary Buttons - Calming Wedgewood Blue */
+  .btn-secondary {
+    @apply bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 text-center inline-block shadow-md hover:shadow-lg;
+  }
+  
+  /* Outline Buttons - Sophisticated Accent */
+  .btn-outline {
+    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 text-center inline-block;
+  }
+
+  /* Accent Button - Soft Purple for secondary actions */
+  .btn-accent {
+    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 text-center inline-block shadow-md hover:shadow-lg;
+  }
+
+  /* Educational Card Styling */
+  .edu-card {
+    @apply bg-white border border-accent-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+
+  /* Feature Highlight Boxes */
+  .feature-box {
+    @apply bg-white p-6 rounded-xl border border-secondary-200 hover:border-secondary-300 transition-colors duration-300;
+  }
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
