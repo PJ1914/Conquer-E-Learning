@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import CoursesPage from './pages/CoursesPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactUsPage from './pages/ContactUsPage';
+import CareersPage from './pages/CareersPage';
 import LMSLoginPage from './pages/LMSLoginPage';
 
 function App() {
@@ -29,6 +30,11 @@ function App() {
         <Route path="/contact" element={
           <Layout>
             <ContactUsPage />
+          </Layout>
+        } />
+        <Route path="/careers" element={
+          <Layout>
+            <CareersPage />
           </Layout>
         } />
         

@@ -1,12 +1,6 @@
 const AboutUsPage = () => {
   const team = [
     {
-      name: 'CodeTapasya',
-      role: 'Founder & Lead Developer',
-      image: 'https://via.placeholder.com/200x200/3B82F6/FFFFFF?text=CT',
-      bio: 'Passionate educator and developer with 10+ years of experience in building scalable web applications.'
-    },
-    {
       name: 'Sarah Johnson',
       role: 'Head of Curriculum',
       image: 'https://via.placeholder.com/200x200/22C55E/FFFFFF?text=SJ',
@@ -86,7 +80,7 @@ const AboutUsPage = () => {
               </h2>
               <div className="prose text-gray-600 space-y-4">
                 <p className="text-lg">
-                  Founded by CodeTapasya, Conquer E-Learning emerged from a simple yet powerful vision: 
+                  Conquer E-Learning emerged from a simple yet powerful vision: 
                   to bridge the gap between traditional education and the rapidly evolving technology industry.
                 </p>
                 <p>
@@ -97,7 +91,8 @@ const AboutUsPage = () => {
                 <p>
                   Today, we are proud to serve thousands of students worldwide, helping them transform 
                   their careers and achieve their professional goals through comprehensive, industry-relevant 
-                  courses and personalized mentorship.
+                  courses and personalized mentorship. We are proudly supported by CodeTapasya as our 
+                  IT service provider, ensuring robust technical infrastructure and innovative solutions.
                 </p>
               </div>
             </div>
