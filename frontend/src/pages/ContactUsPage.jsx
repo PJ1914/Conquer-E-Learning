@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import { 
+  FadeIn, 
+  SlideIn, 
+  StaggerContainer, 
+  StaggerItem, 
+  HoverScale, 
+  ScrollReveal 
+} from '../components/ui/AnimationWrapper';
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -109,13 +117,17 @@ const ContactUsPage = () => {
       <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Get in Touch
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Have questions about our courses or need support? We're here to help! 
-              Reach out to us through any of the channels below.
-            </p>
+            <FadeIn direction="down" delay={0.2}>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Get in Touch
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.5}>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Have questions about our courses or need support? We're here to help! 
+                Reach out to us through any of the channels below.
+              </p>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -123,24 +135,26 @@ const ContactUsPage = () => {
       {/* Contact Info Cards */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.1}>
             {contactInfo.map((info, index) => (
-              <div key={index} className="text-center p-6 bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow duration-300">
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600 mx-auto mb-4">
-                  {info.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {info.title}
-                </h3>
-                <p className="text-primary-600 font-medium mb-2">
-                  {info.details}
-                </p>
-                <p className="text-gray-600 text-sm">
-                  {info.description}
-                </p>
-              </div>
+              <StaggerItem key={index}>
+                <HoverScale className="text-center p-6 bg-white rounded-xl shadow-sm border hover:shadow-md transition-all duration-300 h-full">
+                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600 mx-auto mb-4">
+                    {info.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    {info.title}
+                  </h3>
+                  <p className="text-primary-600 font-medium mb-2">
+                    {info.details}
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    {info.description}
+                  </p>
+                </HoverScale>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -149,23 +163,26 @@ const ContactUsPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Send us a Message
-              </h2>
-              
-              {submitStatus === 'success' && (
-                <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                  <div className="flex items-center">
-                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Thank you! Your message has been sent successfully.
-                  </div>
-                </div>
-              )}
+            <SlideIn direction="left" delay={0.3}>
+              <div className="bg-white p-8 rounded-xl shadow-sm">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Send us a Message
+                </h2>
+                
+                {submitStatus === 'success' && (
+                  <FadeIn>
+                    <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                      <div className="flex items-center">
+                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        Thank you! Your message has been sent successfully.
+                      </div>
+                    </div>
+                  </FadeIn>
+                )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -252,51 +269,64 @@ const ContactUsPage = () => {
                   ></textarea>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full btn-primary ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </button>
+                <HoverScale>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full btn-primary ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </HoverScale>
               </form>
             </div>
+          </SlideIn>
 
             {/* FAQ Section */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-6">
-                {faqs.map((faq, index) => (
-                  <div key={index} className="bg-white p-6 rounded-xl shadow-sm border">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                      {faq.question}
-                    </h3>
-                    <p className="text-gray-600">
-                      {faq.answer}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <SlideIn direction="right" delay={0.5}>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Frequently Asked Questions
+                </h2>
+                <StaggerContainer className="space-y-6" staggerDelay={0.1}>
+                  {faqs.map((faq, index) => (
+                    <StaggerItem key={index}>
+                      <HoverScale className="bg-white p-6 rounded-xl shadow-sm border transition-all duration-300">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                          {faq.question}
+                        </h3>
+                        <p className="text-gray-600">
+                          {faq.answer}
+                        </p>
+                      </HoverScale>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
 
-              <div className="mt-8 p-6 bg-primary-50 rounded-xl border border-primary-200">
-                <h3 className="text-lg font-semibold text-primary-900 mb-3">
-                  Need Immediate Help?
-                </h3>
-                <p className="text-primary-700 mb-4">
-                  Join our student community or reach out to our support team for instant assistance.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <button className="btn-primary bg-primary-600 hover:bg-primary-700">
-                    Join Community
-                  </button>
-                  <button className="btn-outline border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white">
-                    Live Chat
-                  </button>
-                </div>
+                <ScrollReveal>
+                  <div className="mt-8 p-6 bg-primary-50 rounded-xl border border-primary-200">
+                    <h3 className="text-lg font-semibold text-primary-900 mb-3">
+                      Need Immediate Help?
+                    </h3>
+                    <p className="text-primary-700 mb-4">
+                      Join our student community or reach out to our support team for instant assistance.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <HoverScale>
+                        <button className="btn-primary bg-primary-600 hover:bg-primary-700">
+                          Join Community
+                        </button>
+                      </HoverScale>
+                      <HoverScale>
+                        <button className="btn-outline border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white">
+                          Live Chat
+                        </button>
+                      </HoverScale>
+                    </div>
+                  </div>
+                </ScrollReveal>
               </div>
-            </div>
+            </SlideIn>
           </div>
         </div>
       </section>

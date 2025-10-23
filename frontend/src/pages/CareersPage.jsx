@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import { 
+  FadeIn, 
+  SlideIn, 
+  StaggerContainer, 
+  StaggerItem, 
+  HoverScale, 
+  ScrollReveal 
+} from '../components/ui/AnimationWrapper';
 
 const CareersPage = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -162,25 +170,39 @@ const CareersPage = () => {
   return (
     <div className="bg-secondary-100 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-600 via-primary-600 to-dark-600 text-white py-16 lg:py-20">
+      <section className="bg-gradient-to-br from-primary-600 via-primary-700 to-violet text-white py-16 lg:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Join Our Mission to
-              <span className="block text-secondary-300 mt-2">Transform Education</span>
-            </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-accent-200 leading-relaxed">
-              Be part of a team that's shaping the future of learning. Build innovative solutions 
-              that empower millions of students worldwide.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto sm:max-w-none">
-              <a href="#openings" className="btn-secondary text-lg px-8 py-3 inline-block text-center">
-                View Open Positions
-              </a>
-              <a href="#culture" className="btn-outline text-lg px-8 py-3 border-white text-white hover:bg-white hover:text-primary-600 inline-block text-center">
-                Learn About Our Culture
-              </a>
-            </div>
+            <FadeIn direction="down" delay={0.2}>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-white drop-shadow-lg">
+                Join Our Mission to
+                <SlideIn direction="left" delay={0.5}>
+                  <span className="block text-secondary-100 mt-2 drop-shadow-lg">Transform Education</span>
+                </SlideIn>
+              </h1>
+            </FadeIn>
+            
+            <FadeIn delay={0.8} duration={0.8}>
+              <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-100 leading-relaxed drop-shadow-md">
+                Be part of a team that's shaping the future of learning. Build innovative solutions 
+                that empower millions of students worldwide.
+              </p>
+            </FadeIn>
+            
+            <FadeIn delay={1.2} direction="up">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto sm:max-w-none">
+                <HoverScale scale={1.05}>
+                  <a href="#openings" className="btn-secondary text-lg px-8 py-3 inline-block text-center transition-all duration-300">
+                    View Open Positions
+                  </a>
+                </HoverScale>
+                <HoverScale scale={1.05}>
+                  <a href="#culture" className="btn-outline text-lg px-8 py-3 border-white text-white hover:bg-white hover:text-primary-600 inline-block text-center transition-all duration-300">
+                    Learn About Our Culture
+                  </a>
+                </HoverScale>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>

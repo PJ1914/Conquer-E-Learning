@@ -1,3 +1,12 @@
+import { 
+  FadeIn, 
+  SlideIn, 
+  StaggerContainer, 
+  StaggerItem, 
+  HoverScale, 
+  ScrollReveal 
+} from '../components/ui/AnimationWrapper';
+
 const AboutUsPage = () => {
   const team = [
     {
@@ -59,13 +68,17 @@ const AboutUsPage = () => {
       <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About Conquer E-Learning
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              We are on a mission to democratize quality technology education and empower 
-              the next generation of innovators and problem solvers.
-            </p>
+            <FadeIn direction="down" delay={0.2}>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                About Conquer E-Learning
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.5}>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                We are on a mission to democratize quality technology education and empower 
+                the next generation of innovators and problem solvers.
+              </p>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -74,35 +87,39 @@ const AboutUsPage = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Our Story
-              </h2>
-              <div className="prose text-gray-600 space-y-4">
-                <p className="text-lg">
-                  Conquer E-Learning emerged from a simple yet powerful vision: 
-                  to bridge the gap between traditional education and the rapidly evolving technology industry.
-                </p>
-                <p>
-                  Having witnessed countless talented individuals struggle to find quality, practical 
-                  technology education, we set out to create a platform that combines expert instruction, 
-                  hands-on learning, and real-world application.
-                </p>
-                <p>
-                  Today, we are proud to serve thousands of students worldwide, helping them transform 
-                  their careers and achieve their professional goals through comprehensive, industry-relevant 
-                  courses and personalized mentorship. We are proudly supported by CodeTapasya as our 
-                  IT service provider, ensuring robust technical infrastructure and innovative solutions.
-                </p>
+            <SlideIn direction="left" delay={0.3}>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  Our Story
+                </h2>
+                <div className="prose text-gray-600 space-y-4">
+                  <p className="text-lg">
+                    Conquer E-Learning emerged from a simple yet powerful vision: 
+                    to bridge the gap between traditional education and the rapidly evolving technology industry.
+                  </p>
+                  <p>
+                    Having witnessed countless talented individuals struggle to find quality, practical 
+                    technology education, we set out to create a platform that combines expert instruction, 
+                    hands-on learning, and real-world application.
+                  </p>
+                  <p>
+                    Today, we are proud to serve thousands of students worldwide, helping them transform 
+                    their careers and achieve their professional goals through comprehensive, industry-relevant 
+                    courses and personalized mentorship. We are proudly supported by CodeTapasya as our 
+                    IT service provider, ensuring robust technical infrastructure and innovative solutions.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="lg:order-first">
-              <img 
-                src="https://via.placeholder.com/600x400/3B82F6/FFFFFF?text=Our+Story" 
-                alt="Our Story" 
-                className="rounded-lg shadow-lg w-full"
-              />
-            </div>
+            </SlideIn>
+            <SlideIn direction="right" delay={0.5}>
+              <div className="lg:order-first">
+                <img 
+                  src="https://via.placeholder.com/600x400/3B82F6/FFFFFF?text=Our+Story" 
+                  alt="Our Story" 
+                  className="rounded-lg shadow-lg w-full"
+                />
+              </div>
+            </SlideIn>
           </div>
         </div>
       </section>
@@ -110,71 +127,79 @@ const AboutUsPage = () => {
       {/* Values Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Our Core Values
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              These principles guide everything we do and shape the learning experience we provide.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Our Core Values
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                These principles guide everything we do and shape the learning experience we provide.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8" staggerDelay={0.2}>
             {values.map((value, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-sm border hover:shadow-md transition-shadow duration-300">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600">
-                      {value.icon}
+              <StaggerItem key={index}>
+                <HoverScale className="bg-white p-8 rounded-xl shadow-sm border hover:shadow-md transition-all duration-300 h-full">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600">
+                        {value.icon}
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                        {value.title}
+                      </h3>
+                      <p className="text-gray-600">
+                        {value.description}
+                      </p>
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      {value.title}
-                    </h3>
-                    <p className="text-gray-600">
-                      {value.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                </HoverScale>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Team Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Meet Our Team
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Passionate educators and industry experts dedicated to your success.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Meet Our Team
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Passionate educators and industry experts dedicated to your success.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" staggerDelay={0.2}>
             {team.map((member, index) => (
-              <div key={index} className="text-center">
-                <img 
-                  src={member.image} 
-                  alt={member.name}
-                  className="mx-auto w-32 h-32 rounded-full mb-6 shadow-lg"
-                />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {member.name}
-                </h3>
-                <p className="text-primary-600 font-medium mb-4">
-                  {member.role}
-                </p>
-                <p className="text-gray-600 text-sm">
-                  {member.bio}
-                </p>
-              </div>
+              <StaggerItem key={index}>
+                <HoverScale className="text-center">
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="mx-auto w-32 h-32 rounded-full mb-6 shadow-lg"
+                  />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {member.name}
+                  </h3>
+                  <p className="text-primary-600 font-medium mb-4">
+                    {member.role}
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    {member.bio}
+                  </p>
+                </HoverScale>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 

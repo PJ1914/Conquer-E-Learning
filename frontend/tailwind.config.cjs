@@ -59,6 +59,8 @@ module.exports = {
           800: '#07072f',
           900: '#050526',
         },
+        // Violet as a standalone color for easy access
+        violet: '#0b0b41',
         // Utility Colors
         neutral: {
           50: '#f9fafb',
