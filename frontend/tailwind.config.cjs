@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         // Primary Brand Colors - Educational Blues
         primary: {
+          25: '#f8f8ff',
           50: '#f0f0fe',
           100: '#e0e0fd',
           200: '#c9c9fb',
@@ -22,6 +23,7 @@ module.exports = {
         },
         // Secondary Colors - Calm Blues & Greens
         secondary: {
+          25: '#fafefe',
           50: '#f8fdfe',
           100: '#f2fbfc', // polar - light background
           200: '#e3f7f9',
