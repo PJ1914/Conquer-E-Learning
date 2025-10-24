@@ -5,16 +5,21 @@ import { useState, useEffect } from 'react';
 export const ModernCarousel = ({ items, autoPlay = true, interval = 5000, className = '' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
-    if (!autoPlay || isPaused) return;
+    if (!autoPlay || isPaused || !items || items.length <= 1) return;
     
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % items.length;
+        return nextIndex;
+      });
     }, interval);
 
     return () => clearInterval(timer);
-  }, [autoPlay, interval, items.length, isPaused]);
+  }, [autoPlay, interval, items.length, isPaused, items]);
 
   const goToSlide = (index) => {
     setCurrentIndex(index);
@@ -28,11 +33,46 @@ export const ModernCarousel = ({ items, autoPlay = true, interval = 5000, classN
     setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
   };
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrevious();
+    }
+    
+    // Reset touch values
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
+  // Safety check
+  if (!items || items.length === 0) {
+    return <div className={`${className} flex items-center justify-center`}>No items to display</div>;
+  }
+
   return (
     <div 
       className={`relative overflow-hidden rounded-2xl ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="relative h-full">
         <AnimatePresence mode="wait">
@@ -49,10 +89,10 @@ export const ModernCarousel = ({ items, autoPlay = true, interval = 5000, classN
         </AnimatePresence>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - Hidden on mobile */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hidden md:flex"
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -61,14 +101,14 @@ export const ModernCarousel = ({ items, autoPlay = true, interval = 5000, classN
 
       <button
         onClick={goToNext}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hidden md:flex"
       >
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
-      {/* Dots Indicator */}
+      {/* Dots Indicator - Visible on all devices */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         {items.map((_, index) => (
           <button
@@ -132,7 +172,9 @@ export const GradientButton = ({
   const variants = {
     primary: 'bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-600 hover:from-primary-700 hover:via-secondary-600 hover:to-accent-700 text-white',
     secondary: 'bg-gradient-to-r from-secondary-500 via-accent-500 to-primary-600 hover:from-secondary-600 hover:via-accent-600 hover:to-primary-700 text-white',
-    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white bg-transparent'
+    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white bg-transparent',
+    solid: 'bg-primary-600 hover:bg-primary-700 text-white',
+    solidSecondary: 'bg-secondary-600 hover:bg-secondary-700 text-white'
   };
 
   const sizes = {

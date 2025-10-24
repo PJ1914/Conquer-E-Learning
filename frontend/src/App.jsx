@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import ScrollToTop from './components/ui/ScrollToTop';
 import HomePage from './pages/HomePage';
 import CoursesPage from './pages/CoursesPage';
 import AboutUsPage from './pages/AboutUsPage';
@@ -10,6 +11,7 @@ import LMSLoginPage from './pages/LMSLoginPage';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         {/* Public routes with layout */}
         <Route path="/" element={
