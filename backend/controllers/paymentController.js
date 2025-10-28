@@ -2,17 +2,16 @@ import crypto from "crypto";
 import { createOrder } from "../services/paymentService.js";
 import db from "../config/db.js";
 import admin from "../config/firebase.js";
+import { asyncHandler } from "../middleware/errorHandler.js";
+import { AppError, ERROR_CODES } from "../utils/AppError.js";
+import { sendSuccess } from "../utils/responseHelper.js";
 
-export const createOrderHandler = async (req, res) => {
-  try {
-    const order = await createOrder(req.body.amount);
-    res.json({ orderId: order.id });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+export const createOrderHandler = asyncHandler(async (req, res) => {
+  const order = await createOrder(req.body.amount);
+  sendSuccess(res, { orderId: order.id });
+});
 
-export const verifyPaymentHandler = async (req, res) => {
+export const verifyPaymentHandler = asyncHandler(async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, userId } = req.body;
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
@@ -22,7 +21,12 @@ export const verifyPaymentHandler = async (req, res) => {
     .digest("hex");
 
   if (expectedSignature !== razorpay_signature) {
-    return res.status(400).send("Invalid signature");
+    throw new AppError(
+      "Invalid signature",
+      true,
+      ERROR_CODES.DATA_VALIDATION.INVALID_DATA_TYPE,
+      400
+    );
   }
 
   // Update user to paid
@@ -42,5 +46,5 @@ export const verifyPaymentHandler = async (req, res) => {
     validUntil: validUntil.toISOString(),
   });
 
-  res.status(200).json({ success: true });
-};
+  sendSuccess(res, { success: true }, 200, "Payment verified successfully");
+});
