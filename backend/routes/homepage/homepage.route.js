@@ -8,14 +8,14 @@ import {
   getHomepagePopularCourses,
   updateHomepagePopularCourses,
   deleteHomepagePopularCourses,
+  createHomepageLatestUpdates,
+  getHomepageLatestUpdates,
+  updateHomepageLatestUpdates,
+  deleteHomepageLatestUpdates,
   createHomepagefaqs,
   getHomepagefaqs,
   updateHomepagefaqs,
   deleteHomepagefaqs,
-  createwhyChooseUs,
-  getwhyChooseUs,
-  updatewhyChooseUs,
-  deletewhyChooseUs,
 } from "../../controllers/homepage/homepage.controller.js";
 
 const router = express.Router();
@@ -30,18 +30,18 @@ router.delete("/stats", deleteHomepageStats);
 router.post("/popular-courses", createHomepagePopularCourses);
 router.get("/popular-courses", getHomepagePopularCourses);
 router.put("/popular-courses", updateHomepagePopularCourses);
-router.delete("/popular-courses", deleteHomepagePopularCourses);
+router.delete("/popular-courses/:id", deleteHomepagePopularCourses);
+
+// Home page Latest Updates Routes
+router.post("/latest-updates", createHomepageLatestUpdates);
+router.get("/latest-updates", getHomepageLatestUpdates);
+router.put("/latest-updates", updateHomepageLatestUpdates);
+router.delete("/latest-updates/:id", deleteHomepageLatestUpdates);
 
 // Homepage FAQs Routes
 router.post("/faqs", createHomepagefaqs);
 router.get("/faqs", getHomepagefaqs);
 router.put("/faqs", updateHomepagefaqs);
-router.delete("/faqs", deleteHomepagefaqs);
-
-// Why Choose Us Routes
-router.post("/why-choose-us", createwhyChooseUs);
-router.get("/why-choose-us", getwhyChooseUs);
-router.put("/why-choose-us", updatewhyChooseUs);
-router.delete("/why-choose-us", deletewhyChooseUs);
+router.delete("/faqs/:id", deleteHomepagefaqs);
 
 export default router;

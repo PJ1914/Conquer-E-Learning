@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import connectMongoDB from "./config/mongodb.js";
 import paymentRoutes from "./routes/payment.js";
 import userRoutes from "./routes/user.js";
 import homepageRoutes from "./routes/homepage/homepage.route.js";
@@ -8,6 +9,9 @@ import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import "./jobs/subscriptionCron.js"; // auto start cron
 
 dotenv.config();
+
+// Connect to MongoDB
+connectMongoDB();
 
 const app = express();
 app.use(cors());
