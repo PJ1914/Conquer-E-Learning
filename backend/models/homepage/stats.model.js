@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const homepageStatsSchema = new mongoose.Schema(
+const StatsSchema = new mongoose.Schema(
   {
     label: {
         type: String,
@@ -22,8 +22,8 @@ const homepageStatsSchema = new mongoose.Schema(
 );
 
 // Index for faster queries
-homepageStatsSchema.index({ isActive: 1 });
+StatsSchema.index({ isActive: 1 });
 
-const HomepageStats = mongoose.model("Stats", homepageStatsSchema);
+const Stats = mongoose.model("Stats", StatsSchema);
 
-export default HomepageStats;
+export default Stats;
