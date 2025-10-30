@@ -1,39 +1,40 @@
 import {
-  HomepageStats,
-  HomepagePopularCourses,
-  HomepageFaqs,
+  Stats,
+  PopularCourses,
+  LatestUpdates,
+  Faqs,
 } from "../../models/index.js";
 import { AppError, ERROR_CODES } from "../../utils/AppError.js";
 
 // Stats services
-class HomepageStatsService {
-  async createHomepageStats(data) {
-    const stats = await HomepageStats.create(data);
+class StatsService {
+  async createStats(data) {
+    const stats = await Stats.create(data);
     return stats;
   }
 
-  async getHomepageStats() {
-    const stats = await HomepageStats.find({ isActive: true })
+  async getStats() {
+    const stats = await Stats.find({ isActive: true })
       .sort({ createdAt: -1 })
       .limit(1);
     return stats.length > 0 ? stats[0] : null;
   }
 
-  async updateHomepageStats(data) {
-    const stats = await HomepageStats.find({ isActive: true })
+  async updateStats(data) {
+    const stats = await Stats.find({ isActive: true })
       .sort({ createdAt: -1 })
       .limit(1);
 
     if (!stats || stats.length === 0) {
       throw new AppError(
-        "Homepage stats not found",
+        "stats not found",
         true,
         ERROR_CODES.NOT_FOUND,
         404
       );
     }
 
-    const updatedStats = await HomepageStats.findByIdAndUpdate(
+    const updatedStats = await Stats.findByIdAndUpdate(
       stats[0]._id,
       data,
       { new: true, runValidators: true }
@@ -42,14 +43,14 @@ class HomepageStatsService {
     return updatedStats;
   }
 
-  async deleteHomepageStats() {
-    const stats = await HomepageStats.find({ isActive: true })
+  async deleteStats() {
+    const stats = await Stats.find({ isActive: true })
       .sort({ createdAt: -1 })
       .limit(1);
 
     if (!stats || stats.length === 0) {
       throw new AppError(
-        "Homepage stats not found",
+        "stats not found",
         true,
         ERROR_CODES.NOT_FOUND,
         404
@@ -57,7 +58,7 @@ class HomepageStatsService {
     }
 
     // Soft delete
-    const deletedStats = await HomepageStats.findByIdAndUpdate(
+    const deletedStats = await Stats.findByIdAndUpdate(
       stats[0]._id,
       { isActive: false },
       { new: true }
@@ -68,20 +69,20 @@ class HomepageStatsService {
 }
 
 // Popular Courses services
-class HomepagePopularCoursesService {
-  async createHomepagePopularCourses(data) {
-    const course = await HomepagePopularCourses.create(data);
+class PopularCoursesService {
+  async createCourse(data) {
+    const course = await PopularCourses.create(data);
     return course;
   }
 
-  async getHomepagePopularCourses() {
-    const courses = await HomepagePopularCourses.find({ isActive: true })
+  async getCourses() {
+    const courses = await PopularCourses.find({ isActive: true })
       .sort({ displayOrder: 1, createdAt: -1 })
       .lean();
     return courses;
   }
 
-  async updateHomepagePopularCourses(data) {
+  async updateCourse(data) {
     const { id, ...updateData } = data;
 
     if (!id) {
@@ -93,7 +94,7 @@ class HomepagePopularCoursesService {
       );
     }
 
-    const course = await HomepagePopularCourses.findByIdAndUpdate(
+    const course = await PopularCourses.findByIdAndUpdate(
       id,
       updateData,
       { new: true, runValidators: true }
@@ -111,7 +112,7 @@ class HomepagePopularCoursesService {
     return course;
   }
 
-  async deleteHomepagePopularCourses(id) {
+  async deleteCourse(id) {
     if (!id) {
       throw new AppError(
         "Course ID is required for deletion",
@@ -121,7 +122,7 @@ class HomepagePopularCoursesService {
       );
     }
 
-    const course = await HomepagePopularCourses.findByIdAndUpdate(
+    const course = await PopularCourses.findByIdAndUpdate(
       id,
       { isActive: false },
       { new: true }
@@ -141,20 +142,20 @@ class HomepagePopularCoursesService {
 }
 
 // Latest Updates services
-class HomepageLatestUpdatesService {
-  async createHomepageLatestUpdates(data) {
-    const update = await HomepageLatestUpdates.create(data);
+class LatestUpdatesService {
+  async createLatestUpdates(data) {
+    const update = await LatestUpdates.create(data);
     return update;
   }
 
-  async getHomepageLatestUpdates() {
-    const updates = await HomepageLatestUpdates.find({ isActive: true })
+  async getLatestUpdates() {
+    const updates = await LatestUpdates.find({ isActive: true })
       .sort({ publishedDate: -1 })
       .lean();
     return updates;
   }
 
-  async updateHomepageLatestUpdates(data) {
+  async updateLatestUpdates(data) {
     const { id, ...updateData } = data;
 
     if (!id) {
@@ -166,7 +167,7 @@ class HomepageLatestUpdatesService {
       );
     }
 
-    const update = await HomepageLatestUpdates.findByIdAndUpdate(
+    const update = await LatestUpdates.findByIdAndUpdate(
       id,
       updateData,
       { new: true, runValidators: true }
@@ -184,7 +185,7 @@ class HomepageLatestUpdatesService {
     return update;
   }
 
-  async deleteHomepageLatestUpdates(id) {
+  async deleteLatestUpdates(id) {
     if (!id) {
       throw new AppError(
         "Update ID is required for deletion",
@@ -194,7 +195,7 @@ class HomepageLatestUpdatesService {
       );
     }
 
-    const update = await HomepageLatestUpdates.findByIdAndUpdate(
+    const update = await LatestUpdates.findByIdAndUpdate(
       id,
       { isActive: false },
       { new: true }
@@ -214,20 +215,20 @@ class HomepageLatestUpdatesService {
 }
 
 // FAQs services
-class HomepagefaqsService {
-  async createHomepagefaqs(data) {
-    const faq = await HomepageFaqs.create(data);
+class FaqsService {
+  async createfaqs(data) {
+    const faq = await Faqs.create(data);
     return faq;
   }
 
-  async getHomepagefaqs() {
-    const faqs = await HomepageFaqs.find({ isActive: true })
+  async getfaqs() {
+    const faqs = await Faqs.find({ isActive: true })
       .sort({ displayOrder: 1, createdAt: -1 })
       .lean();
     return faqs;
   }
 
-  async updateHomepagefaqs(data) {
+  async updatefaqs(data) {
     const { id, ...updateData } = data;
 
     if (!id) {
@@ -239,7 +240,7 @@ class HomepagefaqsService {
       );
     }
 
-    const faq = await HomepageFaqs.findByIdAndUpdate(
+    const faq = await Faqs.findByIdAndUpdate(
       id,
       updateData,
       { new: true, runValidators: true }
@@ -257,7 +258,7 @@ class HomepagefaqsService {
     return faq;
   }
 
-  async deleteHomepagefaqs(id) {
+  async deletefaqs(id) {
     if (!id) {
       throw new AppError(
         "FAQ ID is required for deletion",
@@ -267,7 +268,7 @@ class HomepagefaqsService {
       );
     }
 
-    const faq = await HomepageFaqs.findByIdAndUpdate(
+    const faq = await Faqs.findByIdAndUpdate(
       id,
       { isActive: false },
       { new: true }
@@ -286,7 +287,7 @@ class HomepagefaqsService {
   }
 }
 
-export const HomepageStatsService = new HomepageStatsService();
-export const HomepagePopularCoursesService = new HomepagePopularCoursesService();
-export const HomepageLatestUpdatesService = new HomepageLatestUpdatesService();
-export const HomepagefaqsService = new HomepagefaqsService();
+export const StatsService = new StatsService();
+export const PopularCoursesService = new PopularCoursesService();
+export const LatestUpdatesService = new LatestUpdatesService();
+export const FaqsService = new FaqsService();
