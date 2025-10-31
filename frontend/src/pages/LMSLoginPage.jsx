@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 import { 
   FadeIn, 
   SlideIn, 
@@ -9,20 +8,13 @@ import {
 } from '../components/ui/AnimationWrapper';
 
 const LMSLoginPage = () => {
-  const navigate = useNavigate();
-  const { login, signup, loginWithGoogle, forgotPassword, setError, error } = useAuth();
-  
   const [isLogin, setIsLogin] = useState(true);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [resetEmail, setResetEmail] = useState('');
-  const [resetSuccess, setResetSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     fullName: '',
     phone: ''
-    // authenticate phone number via backend
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,96 +23,36 @@ const LMSLoginPage = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-    setError(null); // Clear any previous errors
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
-    try {
-      if (isLogin) {
-        // Login with email/password
-        const result = await login(formData.email, formData.password);
-        if (result.success) {
-          navigate('/courses'); // Redirect to courses/dashboard
-        }
-      } else {
-        // Sign up validation
-        if (formData.password !== formData.confirmPassword) {
-          setError('Passwords do not match');
-          setIsLoading(false);
-          return;
-        }
-        
-        if (formData.password.length < 6) {
-          setError('Password must be at least 6 characters');
-          setIsLoading(false);
-          return;
-        }
-        
-        // Sign up with email/password
-        const result = await signup(formData.email, formData.password, formData.fullName);
-        if (result.success) {
-          navigate('/courses'); // Redirect to courses/dashboard
-        }
-      }
-    } catch (err) {
-      console.error('Authentication error:', err);
-    } finally {
+    // Simulate authentication
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      // In real implementation, this would redirect to LMS dashboard
+      alert(isLogin ? 'Login successful!' : 'Registration successful!');
+    }, 2000);
   };
 
-  const handleGoogleAuth = async () => {
+  const handleGoogleAuth = () => {
     setIsLoading(true);
-    setError(null); // Clear any previous errors
-    
-    try {
-      const result = await loginWithGoogle();
-      if (result.success) {
-        navigate('/courses'); // Redirect to courses/dashboard
-      } else if (result.error) {
-        // Only show error if it's not popup closed by user
-        if (!result.error.includes('popup-closed-by-user') && 
-            !result.error.includes('cancelled-popup-request')) {
-          setError(result.error);
-        }
-      }
-    } catch (err) {
-      console.error('Google authentication error:', err);
-    } finally {
+    // Simulate Google OAuth
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      alert('Google authentication successful!');
+    }, 1500);
   };
 
   const handleGitHubAuth = () => {
     setIsLoading(true);
-    // GitHub OAuth not configured in Firebase yet
-    // You can add this later in Firebase Console
+    // Simulate GitHub OAuth
     setTimeout(() => {
       setIsLoading(false);
-      setError('GitHub authentication coming soon! Please use Google or Email/Password.');
-    }, 500);
-  };
-
-  const handleForgotPassword = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setResetSuccess(false);
-    
-    const result = await forgotPassword(resetEmail);
-    
-    if (result.success) {
-      setResetSuccess(true);
-      setTimeout(() => {
-        setShowForgotPassword(false);
-        setResetEmail('');
-        setResetSuccess(false);
-      }, 3000);
-    }
-    
-    setIsLoading(false);
+      alert('GitHub authentication successful!');
+    }, 1500);
   };
 
   return (
@@ -152,23 +84,11 @@ const LMSLoginPage = () => {
         {/* Main Form Card */}
         <ScaleIn delay={0.4}>
           <div className="bg-white rounded-xl shadow-lg p-8">
-            {/* Error Message */}
-            {error && (
-              <FadeIn>
-                <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
-                  {error}
-                </div>
-              </FadeIn>
-            )}
-            
             {/* Tab Switcher */}
             <FadeIn delay={0.6}>
               <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
                 <button
-                  onClick={() => {
-                    setIsLogin(true);
-                    setError(null);
-                  }}
+                  onClick={() => setIsLogin(true)}
                   className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
                     isLogin 
                       ? 'text-white shadow-sm' 
@@ -179,10 +99,7 @@ const LMSLoginPage = () => {
                   Sign In
                 </button>
                 <button
-                  onClick={() => {
-                    setIsLogin(false);
-                    setError(null);
-                  }}
+                  onClick={() => setIsLogin(false)}
                   className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
                     !isLogin 
                       ? 'text-white shadow-sm' 
@@ -202,27 +119,15 @@ const LMSLoginPage = () => {
                   <button
                     onClick={handleGoogleAuth}
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50"
                     >
-                    {isLoading ? (
-                      <>
-                        <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Authenticating...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                          <path fill="#4285f4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
-                          <path fill="#34a853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/>
-                          <path fill="#fbbc05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/>
-                          <path fill="#ea4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
-                        </svg>
-                        Continue with Google
-                      </>
-                    )}
+                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                      <path fill="#4285f4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
+                      <path fill="#34a853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/>
+                      <path fill="#fbbc05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/>
+                      <path fill="#ea4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                    </svg>
+                    Continue with Google
                   </button>
                 </HoverScale>
                 
@@ -347,16 +252,9 @@ const LMSLoginPage = () => {
                   <input type="checkbox" className="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
                   <span className="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
-                <button 
-                  type="button"
-                  onClick={() => {
-                    setShowForgotPassword(true);
-                    setError(null);
-                  }}
-                  className="text-sm text-primary-600 hover:text-primary-500"
-                >
+                <Link to="/forgot-password" className="text-sm text-primary-600 hover:text-primary-500">
                   Forgot password?
-                </button>
+                </Link>
               </div>
             )}
 
@@ -407,71 +305,6 @@ const LMSLoginPage = () => {
           </div>
         </FadeIn>
       </div>
-
-      {/* Forgot Password Modal */}
-      {showForgotPassword && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <ScaleIn>
-            <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Reset Password</h3>
-              <p className="text-gray-600 mb-6">Enter your email to receive a password reset link</p>
-              
-              {resetSuccess && (
-                <div className="mb-4 bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg">
-                  Password reset email sent! Check your inbox.
-                </div>
-              )}
-              
-              {error && (
-                <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
-                  {error}
-                </div>
-              )}
-              
-              <form onSubmit={handleForgotPassword}>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    value={resetEmail}
-                    onChange={(e) => {
-                      setResetEmail(e.target.value);
-                      setError(null);
-                    }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-                
-                <div className="flex gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowForgotPassword(false);
-                      setResetEmail('');
-                      setError(null);
-                      setResetSuccess(false);
-                    }}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="flex-1 btn-primary disabled:opacity-50"
-                  >
-                    {isLoading ? 'Sending...' : 'Send Reset Link'}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </ScaleIn>
-        </div>
-      )}
     </div>
   );
 };

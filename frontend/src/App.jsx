@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
 import Layout from './components/layout/Layout';
 import ScrollToTop from './components/ui/ScrollToTop';
 import HomePage from './pages/HomePage';
@@ -12,38 +11,37 @@ import LMSLoginPage from './pages/LMSLoginPage';
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <ScrollToTop />
-        <Routes>
-          {/* Public routes with layout */}
-          <Route path="/" element={
-            <Layout>
-              <HomePage />
-            </Layout>
-          } />
-          <Route path="/courses" element={
-            <Layout>
-              <CoursesPage />
-            </Layout>
-          } />
-          <Route path="/about" element={
-            <Layout>
-              <AboutUsPage />
-            </Layout>
-          } />
-          <Route path="/contact" element={
-            <Layout>
-              <ContactUsPage />
-            </Layout>
-          } />
-          <Route path="/careers" element={
-            <Layout>
-              <CareersPage />
-            </Layout>
-          } />
-          
-          {/* LMS Login page without layout */}
-          <Route path="/login" element={<LMSLoginPage />} />
+      <ScrollToTop />
+      <Routes>
+        {/* Public routes with layout */}
+        <Route path="/" element={
+          <Layout>
+            <HomePage />
+          </Layout>
+        } />
+        <Route path="/courses" element={
+          <Layout>
+            <CoursesPage />
+          </Layout>
+        } />
+        <Route path="/about" element={
+          <Layout>
+            <AboutUsPage />
+          </Layout>
+        } />
+        <Route path="/contact" element={
+          <Layout>
+            <ContactUsPage />
+          </Layout>
+        } />
+        <Route path="/careers" element={
+          <Layout>
+            <CareersPage />
+          </Layout>
+        } />
+        
+        {/* LMS Login page without layout */}
+        <Route path="/login" element={<LMSLoginPage />} />
         
         {/* 404 Page */}
         <Route path="*" element={
@@ -57,8 +55,7 @@ function App() {
             </div>
           </Layout>
         } />
-        </Routes>
-      </AuthProvider>
+      </Routes>
     </Router>
   );
 }
