@@ -1,21 +1,10 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAuth } from '../../context/AuthContext';
-import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
-  const { currentUser, logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
-    setShowUserMenu(false);
-  };
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -83,78 +72,20 @@ const Header = () => {
             </div>
           </div>
 
-          {/* User Menu / Login Button */}
+          {/* Login Button */}
           <div className="hidden md:block">
-            {currentUser ? (
-              <div className="relative">
-                <motion.button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-3 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  {currentUser.photoURL ? (
-                    <img 
-                      src={currentUser.photoURL} 
-                      alt={currentUser.displayName} 
-                      className="w-8 h-8 rounded-full"
-                    />
-                  ) : (
-                    <FaUser className="w-5 h-5" />
-                  )}
-                  <span className="max-w-[150px] truncate">
-                    {currentUser.displayName || currentUser.email}
-                  </span>
-                </motion.button>
-
-                {/* User Dropdown Menu */}
-                <AnimatePresence>
-                  {showUserMenu && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
-                    >
-                      <Link
-                        to="/profile"
-                        className="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setShowUserMenu(false)}
-                      >
-                        My Profile
-                      </Link>
-                      <Link
-                        to="/courses"
-                        className="block px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setShowUserMenu(false)}
-                      >
-                        My Courses
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
-                      >
-                        <FaSignOutAlt />
-                        Logout
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
+              <Link
+                to="/login"
+                className="bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                <Link
-                  to="/login"
-                  className="bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
-                >
-                  LMS Login
-                </Link>
-              </motion.div>
-            )}
+                Login to LMS
+              </Link>
+            </motion.div>
           </div>
 
           {/* Mobile menu button */}
@@ -227,69 +158,15 @@ const Header = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ delay: navigation.length * 0.1, duration: 0.3 }}
-                  className="pt-2 space-y-2"
+                  className="pt-2"
                 >
-                  {currentUser ? (
-                    <>
-                      <div className="px-4 py-3 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl border border-primary-200">
-                        <div className="flex items-center gap-3 mb-2">
-                          {currentUser.photoURL ? (
-                            <img 
-                              src={currentUser.photoURL} 
-                              alt={currentUser.displayName} 
-                              className="w-10 h-10 rounded-full"
-                            />
-                          ) : (
-                            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-full flex items-center justify-center">
-                              <FaUser className="text-white" />
-                            </div>
-                          )}
-                          <div>
-                            <p className="font-semibold text-gray-800 truncate">
-                              {currentUser.displayName || 'User'}
-                            </p>
-                            <p className="text-xs text-gray-600 truncate">
-                              {currentUser.email}
-                            </p>
-                          </div>
-                        </div>
-                        <Link
-                          to="/profile"
-                          className="block text-center text-sm text-primary-600 hover:text-primary-700 font-semibold"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          View Profile
-                        </Link>
-                      </div>
-                      <button
-                        onClick={() => {
-                          handleLogout();
-                          setIsMenuOpen(false);
-                        }}
-                        className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
-                      >
-                        <FaSignOutAlt />
-                        Logout
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        to="/login"
-                        className="block w-full text-center bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold px-4 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        to="/signup"
-                        className="block w-full text-center bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50 font-semibold px-4 py-3 rounded-xl transition-all duration-300"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Sign Up
-                      </Link>
-                    </>
-                  )}
+                  <Link
+                    to="/login"
+                    className="block w-full text-center bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold px-4 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login to LMS
+                  </Link>
                 </motion.div>
               </motion.div>
             </motion.div>
