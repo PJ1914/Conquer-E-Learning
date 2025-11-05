@@ -4,7 +4,7 @@ import { WORK_TYPE } from "../../utils/constants.js";
 const requirementSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: Object.values(WORK_TYPE),
+    enum: WORK_TYPE,
     required: true,
   },
   minyears: {

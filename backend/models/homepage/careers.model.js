@@ -10,7 +10,7 @@ const careersSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: Object.values(CAREER_CATEGORY),
+    enum: CAREER_CATEGORY,
   },
   location: {
     type: String,
