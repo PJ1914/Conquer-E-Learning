@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import { WORK_TYPE } from "../../utils/constants.js";
 
 const requirementSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ["remote", "onsite", "hybrid"],
+    enum: Object.values(WORK_TYPE),
     required: true,
   },
   minyears: {

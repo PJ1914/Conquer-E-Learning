@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { CAREER_CATEGORY } from "../../utils/constants.js";
 
 const careersSchema = new mongoose.Schema({
   role: {
@@ -9,7 +10,7 @@ const careersSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["engineering", "education", "marketing", "operations", "design"],
+    enum: Object.values(CAREER_CATEGORY),
   },
   location: {
     type: String,
