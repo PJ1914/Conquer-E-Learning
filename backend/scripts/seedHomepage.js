@@ -14,14 +14,14 @@ const seedData = async () => {
     // Connect to MongoDB
     await connectMongoDB();
 
-    console.log("🌱 Starting to seed database...");
+    console.log("Starting to seed database...");
 
     // Clear existing data
     await HomepageStats.deleteMany({});
     await HomepagePopularCourses.deleteMany({});
     await HomepageFaqs.deleteMany({});
 
-    console.log("✅ Cleared existing data");
+    console.log("Cleared existing data");
 
     // Seed Homepage Stats
     const stats = await HomepageStats.create({
@@ -31,7 +31,7 @@ const seedData = async () => {
       successRate: 95,
       isActive: true,
     });
-    console.log("✅ Created Homepage Stats");
+    console.log("Created Homepage Stats");
 
     // Seed Popular Courses
     const courses = await HomepagePopularCourses.insertMany([
@@ -84,7 +84,7 @@ const seedData = async () => {
         isActive: true,
       },
     ]);
-    console.log(`✅ Created ${courses.length} Popular Courses`);
+    console.log(`Created ${courses.length} Popular Courses`);
 
     // Seed FAQs
     const faqs = await HomepageFaqs.insertMany([
@@ -124,7 +124,7 @@ const seedData = async () => {
         isActive: true,
       },
     ]);
-    console.log(`✅ Created ${faqs.length} FAQs`);
+    console.log(`Created ${faqs.length} FAQs`);
 
     console.log("\n🎉 Database seeded successfully!");
     console.log("\nSeeded Data Summary:");
@@ -134,7 +134,7 @@ const seedData = async () => {
 
     process.exit(0);
   } catch (error) {
-    console.error("❌ Error seeding database:", error);
+    console.error("Error seeding database:", error);
     process.exit(1);
   }
 };
