@@ -1,11 +1,15 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-const PopularCoursesSchema = Schema(
+const PopularCoursesSchema = new Schema(
+  {
+    courseId: {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
+      required: [true, "Course ID is required"],
+    }
+  }
 );
 
-const PopularCourses = mongoose.model(
-  "PopularCourses",
-  PopularCoursesSchema
-);
+const PopularCourses = model("PopularCourses", PopularCoursesSchema);
 
 export default PopularCourses;

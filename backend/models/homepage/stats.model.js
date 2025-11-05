@@ -1,29 +1,25 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const homepageStatsSchema = new mongoose.Schema(
+const StatsSchema = new Schema(
   {
     label: {
         type: String,
         required: [true, "Stat label is required"],
         trim: true,
-        maxlength: [100, "Label cannot exceed 100 characters"],
     },
     value: {
-        type: Number,
+        type: String,
         required: [true, "Stat value is required"],
-        min: [0, "Value cannot be negative"],
+        trim: true,
     },
     symbol: {
         type: String,
+        required: [true, "Stat symbol is required"],
         trim: true,
-        maxlength: [10, "Symbol cannot exceed 10 characters"],
     },
   },
 );
 
-// Index for faster queries
-homepageStatsSchema.index({ isActive: 1 });
+const Stats = model("Stats", StatsSchema);
 
-const HomepageStats = mongoose.model("Stats", homepageStatsSchema);
-
-export default HomepageStats;
+export default Stats;
