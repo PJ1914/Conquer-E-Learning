@@ -14,14 +14,14 @@ class StatsService {
   }
 
   async getStats() {
-    const stats = await Stats.find({ isActive: true })
+    const stats = await Stats.find()
       .sort({ createdAt: -1 })
       .limit(1);
     return stats.length > 0 ? stats[0] : null;
   }
 
   async updateStats(data) {
-    const stats = await Stats.find({ isActive: true })
+    const stats = await Stats.find()
       .sort({ createdAt: -1 })
       .limit(1);
 
@@ -43,8 +43,8 @@ class StatsService {
     return updatedStats;
   }
 
-  async deleteStats() {
-    const stats = await Stats.find({ isActive: true })
+  async deleteStats(data) {
+    const stats = await Stats.find()
       .sort({ createdAt: -1 })
       .limit(1);
 
@@ -56,14 +56,7 @@ class StatsService {
         404
       );
     }
-
-    // Soft delete
-    const deletedStats = await Stats.findByIdAndUpdate(
-      stats[0]._id,
-      { isActive: false },
-      { new: true }
-    );
-
+    const deletedStats = await Stats.findByIdAndDelete(data._id);
     return deletedStats;
   }
 }
@@ -76,7 +69,7 @@ class PopularCoursesService {
   }
 
   async getCourses() {
-    const courses = await PopularCourses.find({ isActive: true })
+    const courses = await PopularCourses.find()
       .sort({ displayOrder: 1, createdAt: -1 })
       .lean();
     return courses;
@@ -123,9 +116,7 @@ class PopularCoursesService {
     }
 
     const course = await PopularCourses.findByIdAndUpdate(
-      id,
-      { isActive: false },
-      { new: true }
+      id
     );
 
     if (!course) {
@@ -149,7 +140,7 @@ class LatestUpdatesService {
   }
 
   async getLatestUpdates() {
-    const updates = await LatestUpdates.find({ isActive: true })
+    const updates = await LatestUpdates.find()
       .sort({ publishedDate: -1 })
       .lean();
     return updates;
@@ -195,11 +186,7 @@ class LatestUpdatesService {
       );
     }
 
-    const update = await LatestUpdates.findByIdAndUpdate(
-      id,
-      { isActive: false },
-      { new: true }
-    );
+    const update = await LatestUpdates.findByIdAndUpdate(id);
 
     if (!update) {
       throw new AppError(
@@ -222,7 +209,7 @@ class FaqsService {
   }
 
   async getfaqs() {
-    const faqs = await Faqs.find({ isActive: true })
+    const faqs = await Faqs.find()
       .sort({ displayOrder: 1, createdAt: -1 })
       .lean();
     return faqs;
@@ -270,8 +257,6 @@ class FaqsService {
 
     const faq = await Faqs.findByIdAndUpdate(
       id,
-      { isActive: false },
-      { new: true }
     );
 
     if (!faq) {
@@ -287,7 +272,7 @@ class FaqsService {
   }
 }
 
-export const StatsService = new StatsService();
-export const PopularCoursesService = new PopularCoursesService();
-export const LatestUpdatesService = new LatestUpdatesService();
-export const FaqsService = new FaqsService();
+export const statsService = new StatsService();
+export const popularCoursesService = new PopularCoursesService();
+export const latestUpdatesService = new LatestUpdatesService();
+export const faqsService = new FaqsService();
