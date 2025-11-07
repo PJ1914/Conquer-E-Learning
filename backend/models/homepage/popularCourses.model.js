@@ -1,27 +1,15 @@
 import { Schema, model } from "mongoose";
 
-const PopularCoursesSchema = Schema(
+const PopularCoursesSchema = new Schema(
   {
-    question: {
-      type: String,
-      required: [true, "FAQ question is required"],
-      trim: true,
-    },
-    answer: {
-      type: String,
-      required: [true, "FAQ answer is required"],
-      trim: true,
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    views: {
-      type: Number,
-      default: 0,
-      min: [0, "Views cannot be negative"],
-    },
-  },
+    courseId: {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
+      required: [true, "Course ID is required"],
+    }
+  }
 );
+
+const PopularCourses = model("PopularCourses", PopularCoursesSchema);
 
 export default model("PopularCourses", PopularCoursesSchema);

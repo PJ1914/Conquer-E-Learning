@@ -1,30 +1,28 @@
-import mongoose from "mongoose";
+import { Schema, model} from "mongoose";
 
-const LatestUpdatesSchema = new mongoose.Schema(
+const LatestUpdatesSchema = new Schema(
   {
-    title: {
+    label: {
       type: String,
-      required: [true, "Update title is required"],
+      required: [true, "Update label is required"],
       trim: true,
-      maxlength: [200, "Title cannot exceed 200 characters"],
     },
-    content: {
+    header: {
       type: String,
       required: [true, "Update content is required"],
       trim: true,
-      maxlength: [5000, "Content cannot exceed 5000 characters"],
     },
-    publishedDate: {
-      type: Date,
-      default: Date.now,
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
+    description: {
+      type: String,
+      required: [true, "Update description is required"],
+      trim: true,
     },
   },
+  {
+    timestamps: true,
+  }
 );
 
-const LatestUpdates = mongoose.model("HomepageLatestUpdates", LatestUpdatesSchema);
+const LatestUpdates = model("LatestUpdates", LatestUpdatesSchema);
 
 export default LatestUpdates;
