@@ -12,4 +12,4 @@ const PopularCoursesSchema = new Schema(
 
 const PopularCourses = model("PopularCourses", PopularCoursesSchema);
 
-export default PopularCourses;
+export default model("PopularCourses", PopularCoursesSchema);

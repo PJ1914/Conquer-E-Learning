@@ -1,93 +1,101 @@
 import {
-  HomepageStatsService,
-  HomepagePopularCoursesService,
-  HomepageLatestUpdatesService,
-  HomepagefaqsService,
+  statsService,
+  popularCoursesService,
+  latestUpdatesService,
+  faqsService,
 } from "../../services/homepage/homepage.service.js";
 import { asyncHandler } from "../../middleware/errorHandler.js";
 import { sendSuccess, sendCreated } from "../../utils/responseHelper.js";
 
-// Homepage Stats Controllers
-export const createHomepageStats = asyncHandler(async (req, res) => {
-  const result = await HomepageStatsService.createHomepageStats(req.body);
-  sendCreated(res, result, "Homepage stats created successfully");
-});
+// Stats Controllers
+export const StatsController = {
 
-export const getHomepageStats = asyncHandler(async (req, res) => {
-  const result = await HomepageStatsService.getHomepageStats();
-  sendSuccess(res, result);
-});
+  create: asyncHandler(async (req, res) => {
+    const result = await statsService.createStats(req.body);
+    sendCreated(res, result, "Homepage stats created successfully");
+  }),
 
-export const updateHomepageStats = asyncHandler(async (req, res) => {
-  const result = await HomepageStatsService.updateHomepageStats(req.body);
-  sendSuccess(res, result, 200, "Homepage stats updated successfully");
-});
+  get : asyncHandler(async (req, res) => {
+    const result = await statsService.getStats();
+    sendSuccess(res, result);
+  }),
 
-export const deleteHomepageStats = asyncHandler(async (req, res) => {
-  await HomepageStatsService.deleteHomepageStats();
-  sendSuccess(res, null, 200, "Stats deleted successfully");
-});
+  update : asyncHandler(async (req, res) => {
+    const result = await statsService.updateStats(req.body);
+    sendSuccess(res, result, 200, "Homepage stats updated successfully");
+  }),
 
-// Homepage Popular Courses Controllers
-export const createHomepagePopularCourses = asyncHandler(async (req, res) => {
-  const result = await HomepagePopularCoursesService.createHomepagePopularCourses(req.body);
-  sendCreated(res, result, "Popular courses created successfully");
-});
+  delete:  asyncHandler(async (req, res) => {
+    await statsService.deleteStats(req.body);
+    sendSuccess(res, null, 200, "Stats deleted successfully");
+  })
+};
 
-export const getHomepagePopularCourses = asyncHandler(async (req, res) => {
-  const result = await HomepagePopularCoursesService.getHomepagePopularCourses();
-  sendSuccess(res, result);
-});
+// Popular Courses Controllers
+export const PopularCoursesController = {
+  create: asyncHandler(async (req, res) => {
+    const result = await popularCoursesService.createCourse(req.body);
+    sendCreated(res, result, "Popular courses created successfully");
+  }),
+  
+  get: asyncHandler(async (req, res) => {
+    const result = await popularCoursesService.getCourses();
+    sendSuccess(res, result);
+  }),
 
-export const updateHomepagePopularCourses = asyncHandler(async (req, res) => {
-  const result = await HomepagePopularCoursesService.updateHomepagePopularCourses(req.body);
-  sendSuccess(res, result, 200, "Popular courses updated successfully");
-});
+  update: asyncHandler(async (req, res) => {
+    const result = await popularCoursesService.updateCourse(req.body);
+    sendSuccess(res, result, 200, "Popular courses updated successfully");
+  }),
 
-export const deleteHomepagePopularCourses = asyncHandler(async (req, res) => {
-  const result = await HomepagePopularCoursesService.deleteHomepagePopularCourses(req.params.id);
-  sendSuccess(res, result, 200, "Popular courses deleted successfully");
-});
+  delete: asyncHandler(async (req, res) => {
+    const result = await popularCoursesService.deleteCourse(req.params.id);
+    sendSuccess(res, result, 200, "Popular courses deleted successfully");
+  }),
 
-// Homepage latest updates
-export const createHomepageLatestUpdates = asyncHandler(async (req, res) => {
-  const result = await HomepageLatestUpdatesService.createHomepageLatestUpdates(req.body);
-  sendCreated(res, result, "Latest updates created successfully");
-});
-
-export const getHomepageLatestUpdates = asyncHandler(async (req, res) => {
-  const result = await HomepageLatestUpdatesService.getHomepageLatestUpdates();
-  sendSuccess(res, result);
 }
-);
 
-export const updateHomepageLatestUpdates = asyncHandler(async (req, res) => {
-  const result = await HomepageLatestUpdatesService.updateHomepageLatestUpdates(req.body);
-  sendSuccess(res, result, 200, "Latest updates updated successfully");
-});
+// Latest Updates Controllers
+export const LatestUpdatesController = {
+  create: asyncHandler(async (req, res) => {
+    const result = await latestUpdatesService.createLatestUpdates(req.body);
+    sendCreated(res, result, "Latest updates created successfully");
+  }),
 
-export const deleteHomepageLatestUpdates = asyncHandler(async (req, res) => {
-  const result = await HomepageLatestUpdatesService.deleteHomepageLatestUpdates(req.params.id);
-  sendSuccess(res, result, 200, "Latest updates deleted successfully");
-});
+  get: asyncHandler(async (req, res) => {
+    const result = await latestUpdatesService.getLatestUpdates();
+    sendSuccess(res, result);
+  }),
+  update: asyncHandler(async (req, res) => {
+    const result = await latestUpdatesService.updateLatestUpdates(req.body);
+    sendSuccess(res, result, 200, "Latest updates updated successfully");
+  }),
 
-// Homepage FAQs Controllers
-export const createHomepagefaqs = asyncHandler(async (req, res) => {
-  const result = await HomepagefaqsService.createHomepagefaqs(req.body);
-  sendCreated(res, result, "FAQs created successfully");
-});
+  delete: asyncHandler(async (req, res) => {
+    const result = await latestUpdatesService.deleteLatestUpdates(req.params.id);
+    sendSuccess(res, result, 200, "Latest updates deleted successfully");
+  })
+}
 
-export const getHomepagefaqs = asyncHandler(async (req, res) => {
-  const result = await HomepagefaqsService.getHomepagefaqs();
-  sendSuccess(res, result);
-});
+// FAQs Controllers
+export const FaqsController = {
+  create: asyncHandler(async (req, res) => {
+    const result = await faqsService.createfaqs(req.body);
+    sendCreated(res, result, "FAQs created successfully");
+  }),
 
-export const updateHomepagefaqs = asyncHandler(async (req, res) => {
-  const result = await HomepagefaqsService.updateHomepagefaqs(req.body);
-  sendSuccess(res, result, 200, "FAQs updated successfully");
-});
+  get: asyncHandler(async (req, res) => {
+    const result = await faqsService.getfaqs();
+    sendSuccess(res, result);
+  }),
 
-export const deleteHomepagefaqs = asyncHandler(async (req, res) => {
-  const result = await HomepagefaqsService.deleteHomepagefaqs(req.params.id);
-  sendSuccess(res, result, 200, "FAQs deleted successfully");
-});
+  update: asyncHandler(async (req, res) => {
+    const result = await faqsService.updatefaqs(req.body);
+    sendSuccess(res, result, 200, "FAQs updated successfully");
+  }),
+
+  delete: asyncHandler(async (req, res) => {
+    const result = await faqsService.deletefaqs(req.params.id);
+    sendSuccess(res, result, 200, "FAQs deleted successfully");
+  })
+}
