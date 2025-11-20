@@ -104,3 +104,63 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Print Styles for Resume */
+@media print {
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:static {
+    position: static !important;
+  }
+
+  .print\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+
+  .print\:gap-0 {
+    gap: 0 !important;
+  }
+
+  .print\:py-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+
+  .print\:border-0 {
+    border: 0 !important;
+  }
+
+  .print\:rounded-none {
+    border-radius: 0 !important;
+  }
+
+  .print\:text-dark-600 {
+    color: #43436d !important;
+  }
+
+  /* Ensure resume preview is visible during print */
+  .resume-preview {
+    page-break-inside: avoid;
+  }
+
+  /* Hide everything except the resume preview when printing */
+  header, footer, nav, .print\:hidden {
+    display: none !important;
+  }
+}
