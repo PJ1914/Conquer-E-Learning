@@ -6,6 +6,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactUsPage from './pages/ContactUsPage';
 import CareersPage from './pages/CareersPage';
 import LMSLoginPage from './pages/LMSLoginPage';
+import ResumeMakerPage from './pages/ResumeMakerPage';
 
 function App() {
   return (
@@ -35,6 +36,11 @@ function App() {
         <Route path="/careers" element={
           <Layout>
             <CareersPage />
+          </Layout>
+        } />
+        <Route path="/resume-maker" element={
+          <Layout>
+            <ResumeMakerPage />
           </Layout>
         } />
         
